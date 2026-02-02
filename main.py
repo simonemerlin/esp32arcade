@@ -1,7 +1,7 @@
 # main.py -- put your code here1
 from machine import Pin, SPI
 import ili9341, time
-from game_engine import Sprite
+from game_engine import Sprite, Invader
 from controls import Button
 from soundfx import SoundManager
 from ui import Scoreboard
@@ -22,10 +22,10 @@ scoreboard = Scoreboard(display, 10, 10, color=0xFFFF)
 
 
 last_laser_time = 0
-invader = Sprite(display, x=150, y=150, w=20, h=20, color=ili9341.color565(0, 255, 0))
+invader = Invader(display, x=150, y=20, w=20, h=20, color=ili9341.color565(0, 255, 0))
+invader2 = Invader(display, x=125, y=20, w=20, h=20, color=ili9341.color565(0, 255, 0))
 
 # makes the "invaders"
-invader_last_move_time = 0   
 # player.draw()
 # player.update()
 # invader.draw()
@@ -62,7 +62,7 @@ while True:
        None
     if btn_fire.is_held():
         if time.time_ns() > last_laser_time + 420000000:
-            laserslist.append(Sprite(display, x= round(player.x + player.w / 2 - 2.5), y=player.y-17, w=5, h=17, color=ili9341.color565(255, 0, 0), vy = -8))
+            laserslist.append(Sprite(display, x= round(player.x + player.w / 2 - 2.5), y=player.y-17, w=5, h=17, color=ili9341.color565(255, 0, 0), vy = -15))
             sfx.play_shoot()
             last_laser_time = time.time_ns()     
          
@@ -74,11 +74,10 @@ while True:
 
     laserslist = [l for l in laserslist if l.active]
 
-    if time.time_ns() > invader_last_move_time + 400000000:
-        invader_last_move_time  = time.time_ns()
-        invader.update()
-        invader.x += invader_speed
-            
-        invader.draw()
-    
+    invader.invader_update()  
+    invader2.invader_update()  
+
+
     time.sleep(0.02)
+    
+    

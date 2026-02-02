@@ -1,5 +1,6 @@
 import framebuf
 
+import time 
 class Sprite:
     def __init__(self, display, x, y, w, h, color, bitmap=None, vx=0, vy=0):
         self.display = display
@@ -55,4 +56,34 @@ class Sprite:
                 self.y < other.y + other.h and
                 self.y + self.h > other.y)
 
+
+class Invader(Sprite):
+
+    invader_last_move_time = 0   
+    invader_speed = 10
+
+    
+    def __init__(self, display, x, y, w, h, color, bitmap=None, vx=0, vy=0):
+        super().__init__(display, x, y, w, h, color, bitmap, vx, vy)
+        
+    
+    def invader_update(self):
+        if time.time_ns() > self.invader_last_move_time + 400000000:
+            self.invader_last_move_time  = time.time_ns()
+            self.x += self.invader_speed
+            self.draw()
+            self.update()
+
+            if self.x > 290:
+                self.invader_speed = -10
+                
+            if self.x < 0:
+                self.invader_speed = 10
+
+            if self.x > 290:
+                self.y += 25
+                self.update()
+            if self.x < 0:
+                self.y += 25
+                self.update()
 
