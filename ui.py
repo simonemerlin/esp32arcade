@@ -31,3 +31,9 @@ class Scoreboard:
         BLACK = 0x0000
         self.display.draw_text(124, 115, 'GAME OVER', self.arcadepix, BLACK, self.color)
         self.display.draw_text(110, 135, 'PRESS FIRE', self.arcadepix, BLACK, self.color)
+    
+    def show_you_won(self):
+        self.display.fill_rectangle(60, 100, 200, 60, self.color)
+        BLACK = 0x0000
+        self.display.draw_text(124, 115, 'YOU WON!', self.arcadepix, BLACK, self.color)
+        self.display.draw_text(110, 135, 'PRESS FIRE', self.arcadepix, BLACK, self.color)
