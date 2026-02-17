@@ -25,9 +25,9 @@ player_laser_speed = -15
 invader_laser_speed = 5
 invader_image = display.load_sprite("invader24x17.raw", 24, 17)
 
-player_image = display.load_sprite("battleship20x20.raw", 16, 17)
+player_image = display.load_sprite("spaceship24x14.raw", 24, 14)
 
-
+invader_speed = 0.3e9
 score_to_win = 15
 
 
@@ -45,7 +45,7 @@ def reset_game():
     
     global player
     global player_image
-    player = Player(display, x=230, y=200, w=16, h=17, bitmap= player_image, color=ili9341.color565(0, 0, 150))
+    player = Player(display, x=230, y=200, w=24, h=14, bitmap= player_image, color=ili9341.color565(0, 0, 150))
     player.draw()
     
     global last_laser_time
@@ -59,7 +59,7 @@ def reset_game():
 
     global invaders_lasers_list
     invaders_lasers_list = []
-
+    
     global invader_speed
     invader_speed = 0.3e9
 
@@ -67,7 +67,7 @@ def reset_invaders():
     global invaders_list
     global invader_image
     for i in range(0, num_invaders): 
-        invader = Invader(display, x=10 + i*40, y=20 , w=24, h=17,  bitmap = invader_image, color=ili9341.color565(0, 255, 0))
+        invader = Invader(display, x=10 + i*40, y=20 , w=24, h=17,  bitmap = invader_image, id = i,  color=ili9341.color565(0, 255, 0))
         invaders_list.append(invader)
 
 reset_game()
@@ -111,6 +111,7 @@ while True:
 
         ### ============== INVADERS
         #update invaders
+        Invader.move_row(invader_speed)
         for invader in invaders_list: 
             invader.move(invader_speed)
             
@@ -147,8 +148,9 @@ while True:
 
         invaders_list = [l for l in invaders_list if l.active]
         if len(invaders_list) == 0:
-            invader_speed -= 0.06e9
             reset_invaders()
+            invader_speed -= 0.06e9
+
 
        
            

@@ -105,28 +105,58 @@ class Player(Sprite):
 
 class Invader(Sprite):
 
+    y_position = 10
+    invader_speed = 20
+    invaders_spacing = 40
+    invaders_row_start_x = 20
+    invader_last_move_time = 0 
+
     
-    def __init__(self, display, x, y, w, h, color, bitmap=None, vx=0, vy=0):
+    def __init__(self, display, x, y, w, h, color, id = 0, bitmap=None, vx=0, vy=0):
         super().__init__(display, x, y, w, h, color, bitmap, vx, vy) 
         self.invader_last_move_time = 0   
-        self.invader_speed = 20
+        Invader.invader_speed = 20
+        Invader.y_position = 20
+        
+        Invader.invaders_row_start_x = 20
+        Invader.invader_last_move_time = 0 
+        Invader.y_position = 10
+        
         self.lasers = []
-
+        self.id = id
+        self.x = Invader.invaders_row_start_x + self.id * Invader.invaders_spacing
+     
+    @classmethod
+    def move_row(cls, speed = 0.3e9):
+        if time.time_ns() > cls.invader_last_move_time + speed :
+            cls.invader_last_move_time  = time.time_ns()
+            cls.invaders_row_start_x += cls.invader_speed
+            if cls.invaders_row_start_x > 100 or cls.invaders_row_start_x < 10 :
+                cls.y_position += 20 
+                cls.invader_speed = -cls.invader_speed
+             
     def move(self, speed = 0.3e9):
-        if time.time_ns() > self.invader_last_move_time + speed :
-            self.invader_last_move_time  = time.time_ns()
-            self.x += self.invader_speed
-         
-            if self.x < 15:
-                self.invader_speed += 40
-                self.y += 40
-                
-            if self.x > 285:
-                self.invader_speed -= 40
-                self.y += 40
+        # if time.time_ns() > self.invader_last_move_time + speed :
+        #     self.invader_last_move_time  = time.time_ns()
+        self.x = Invader.invaders_row_start_x + self.id * Invader.invaders_spacing
+    
+        #self.x += Invader.invader_speed
+        
+        # if self.x < 15:
+        #     Invader.invader_speed += 40
+        #     Invader.y_position += 20
 
-            if self.y > 240:
-                self.y = 10
+            
+        # if self.x > 285:
+        #     Invader.invader_speed -= 40
+            
+        #     Invader.y_position += 20
+        
+
+        if self.y > 240:
+            self.delete()
+
+        self.y = Invader.y_position                
                        
         self.draw()
         #self.update()
