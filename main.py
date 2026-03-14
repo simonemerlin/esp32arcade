@@ -151,10 +151,6 @@ while True:
             reset_invaders()
             invader_speed -= 0.06e9
 
-
-       
-           
-
     elif game_state == 'you_won':
         if abc > 0:
             None
@@ -166,7 +162,6 @@ while True:
         if btn_fire.was_pressed():
             reset_game()
 
-    
     elif game_state == 'game_over':
         if btn_fire.was_pressed():
             reset_game()
