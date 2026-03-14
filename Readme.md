@@ -1,7 +1,7 @@
 **Arcade Game**
 
 Project presentation (with game screenshots):
-![Arcade Game Presentation](./Arcade_Game.pdf)
+![Arcade Game Presentation](Arcade_Game.pdf)
 
 Bill of material:
 
