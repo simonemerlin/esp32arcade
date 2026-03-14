@@ -1,7 +1,7 @@
 **Arcade Game**
 
 Project presentation (with game screenshots):
-![Arcade Game Presentation](Arcade_Game.pdf)
+![Arcade Game Presentation](https://github.com/simonemerlin/esp32arcade/blob/main/Arcade%20_Game.pdf)
 
 Bill of material:
 
